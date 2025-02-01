@@ -11,30 +11,9 @@ import {
   TextField,
   Box
 } from '@mui/material';
+import { InsightsTableProps, Column } from './types';
+import { COLUMNS } from './constants';
 import './styles.css';
-
-interface InsightsTableProps {
-  data: Array<{
-    metrics: any;
-    url: string;
-    timestamp: number;
-  }>;
-  loading: boolean;
-}
-
-interface Column {
-  label: string;
-  field: string;
-  numeric?: boolean;
-}
-
-const COLUMNS: Column[] = [
-  { label: 'URL', field: 'url' },
-  { label: 'FCP (s)', field: 'fcp', numeric: true },
-  { label: 'LCP (s)', field: 'lcp', numeric: true },
-  { label: 'CLS', field: 'cls', numeric: true },
-  { label: 'TTFB (s)', field: 'ttfb', numeric: true },
-];
 
 const InsightsTable: React.FC<InsightsTableProps> = ({ data, loading }) => {
   const [orderBy, setOrderBy] = useState<string>('url');
@@ -77,7 +56,6 @@ const InsightsTable: React.FC<InsightsTableProps> = ({ data, loading }) => {
     const aValue = a[orderBy as keyof typeof a];
     const bValue = b[orderBy as keyof typeof b];
     
-    // Handle numeric columns
     const numericColumns = ['fcp', 'lcp', 'cls', 'ttfb'];
     if (numericColumns.includes(orderBy)) {
       const aNum = parseFloat(aValue.toString().replace(/[^\d.-]/g, ''));
@@ -89,7 +67,6 @@ const InsightsTable: React.FC<InsightsTableProps> = ({ data, loading }) => {
       return order === 'asc' ? aNum - bNum : bNum - aNum;
     }
     
-    // Handle string columns
     const aStr = aValue.toString().toLowerCase();
     const bStr = bValue.toString().toLowerCase();
     
