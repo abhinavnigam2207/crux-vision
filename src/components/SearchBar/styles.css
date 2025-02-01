@@ -1,0 +1,41 @@
+.search-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.search-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+}
+
+.search-input .MuiOutlinedInput-root {
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.search-input .MuiOutlinedInput-root:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.search-input .MuiOutlinedInput-root.Mui-focused {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.search-button {
+  height: 56px !important;
+  width: 56px !important;
+  min-width: unset !important;
+  border-radius: 12px !important;
+}
+
+.search-button svg {
+  font-size: 24px;
+}
