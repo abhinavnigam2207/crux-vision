@@ -11,7 +11,7 @@ import {
   TextField,
   Box
 } from '@mui/material';
-import { InsightsTableProps } from './types';
+import { InsightsTableProps, Metric } from './types';
 import { COLUMNS } from './constants';
 import './styles.css';
 
@@ -30,7 +30,7 @@ const InsightsTable: React.FC<InsightsTableProps> = ({ data, loading }) => {
     setOrderBy(field);
   };
 
-  const formatMetricValue = (metric: any) => {
+  const formatMetricValue = (metric: Metric | undefined) => {
     if (!metric?.percentiles?.p75) return '-';
     const value = metric.percentiles.p75;
     return `${(value / 1000).toFixed(1)} s`;
@@ -77,11 +77,11 @@ const InsightsTable: React.FC<InsightsTableProps> = ({ data, loading }) => {
     }
   });
 
-  const calculateSummary = (data: any[]) => {
+  const calculateSummary = (data: ReturnType<typeof getRowsData>) => {
     const numericColumns = ['fcp', 'lcp', 'cls', 'ttfb'];
     return numericColumns.reduce((acc, column) => {
       const values = data
-        .map(row => parseFloat(row[column].toString().replace(/[^\d.-]/g, '')))
+        .map(row => parseFloat(row[column as keyof typeof row].toString().replace(/[^\d.-]/g, '')))
         .filter(val => !isNaN(val));
       
       const avg = values.length ? values.reduce((a, b) => a + b, 0) / values.length : 0;
