@@ -11,7 +11,7 @@ import {
   TextField,
   Box
 } from '@mui/material';
-import { InsightsTableProps, Column } from './types';
+import { InsightsTableProps } from './types';
 import { COLUMNS } from './constants';
 import './styles.css';
 

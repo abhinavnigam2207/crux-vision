@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Snackbar, Alert, CircularProgress } from '@mui/material';
 import SearchBar from '../SearchBar';
 import InsightsTable from '../InsightsTable';
 import HeroSection from '../HeroSection';
