@@ -10,6 +10,10 @@ Scan the QR code below to open the application on your mobile device:
 
 <img src="/public/crux-vision-vercel-app.png" alt="Crux Vision QR Code" width="200"/>
 
+## Technical Documentation
+
+For detailed information about the application's architecture, design decisions, and technical implementation, please refer to our [Design Documentation](./DESIGN.md).
+
 ## Local Development Setup
 
 ### Prerequisites
