@@ -1,28 +1,49 @@
-import React, { useState, useCallback } from 'react';
-import { TextField, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Snackbar, Alert } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import debounce from 'lodash/debounce';
 import './styles.css';
 
 interface SearchBarProps {
   onSearch: (url: string) => void;
+  existingUrls: string[];
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch, existingUrls }) => {
   const [url, setUrl] = useState('');
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastSeverity, setToastSeverity] = useState<'warning' | 'error'>('warning');
 
-  const debouncedSetUrl = useCallback(
-    debounce((value: string) => {
-      setUrl(value);
-    }, 300),
-    []
-  );
+  const isValidUrl = (urlString: string) => {
+    try {
+      const url = new URL(urlString);
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (url) {
-      onSearch(url);
+    if (!url) return;
+
+    if (!isValidUrl(url)) {
+      setToastMessage('Please enter a valid website URL (e.g., https://example.com)');
+      setToastSeverity('error');
+      setShowToast(true);
+      return;
     }
+
+    if (existingUrls.includes(url)) {
+      setToastMessage('This URL has already been analyzed');
+      setToastSeverity('warning');
+      setShowToast(true);
+      setUrl('');
+      return;
+    }
+
+    onSearch(url);
+    setUrl('');
   };
 
   return (
@@ -32,10 +53,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           fullWidth
           variant="outlined"
           className="search-input"
-          defaultValue={url}
-          onChange={(e) => debouncedSetUrl(e.target.value)}
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
           placeholder="https://example.com"
           autoFocus
+          error={url !== '' && !isValidUrl(url)}
+          helperText={url !== '' && !isValidUrl(url) ? 'Please enter a valid URL' : ''}
         />
         <Button 
           variant="contained" 
@@ -45,6 +68,21 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           <SearchIcon />
         </Button>
       </form>
+      <Snackbar
+        open={showToast}
+        autoHideDuration={3000}
+        onClose={() => setShowToast(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        sx={{ top: '30px' }}
+      >
+        <Alert 
+          severity={toastSeverity} 
+          onClose={() => setShowToast(false)}
+          sx={{ width: '100%' }}
+        >
+          {toastMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

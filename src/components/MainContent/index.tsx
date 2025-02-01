@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Header from '../Header';
+import Footer from '../Footer';
 import MetricsDashboard from '../MetricsDashboard';
 
 const MainContent: React.FC = () => {
@@ -9,6 +10,7 @@ const MainContent: React.FC = () => {
     <>
       <Header />
       <MetricsDashboard />
+      <Footer />
     </>
   );
 };
