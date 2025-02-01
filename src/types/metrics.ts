@@ -5,7 +5,23 @@ export interface MetricsData {
 }
 
 export interface CrUXMetrics {
-  first_contentful_paint: any;
-  largest_contentful_paint: any;
-  first_input_delay: any;
+  // Replace 'any' with specific types
+  metrics: Record<string, MetricData>;
+}
+
+export interface MetricData {
+  histogram: Histogram[];
+  percentiles: Percentiles;
+}
+
+export interface Histogram {
+  start: number;
+  end: number;
+  density: number;
+}
+
+export interface Percentiles {
+  p75: number;
+  p95: number;
+  p99: number;
 }
