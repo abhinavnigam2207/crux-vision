@@ -10,6 +10,9 @@ Scan the QR code below to open the application on your mobile device:
 
 <img src="/public/crux-vision-vercel-app.png" alt="Crux Vision QR Code" width="200"/>
 
+### Demo Recording
+Watch our application demo: [Crux Vision Demo](https://www.loom.com/share/d932d509314642a0b3d879e5876e5173?sid=5af3eb25-16be-4a29-8119-482429c180d5)
+
 ## Technical Documentation
 
 For detailed information about the application's architecture, design decisions, and technical implementation, please refer to our [Design Documentation](./DESIGN.md).
